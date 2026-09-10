@@ -1,0 +1,50 @@
+[
+  {
+    "name": "expand",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira REST `expand` header, carried through from raw unchanged."
+  },
+  {
+    "name": "id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira issue id as string. NULLABLE so a bad export becomes a DQ finding in 02_dq_stage.sql rather than a load failure."
+  },
+  {
+    "name": "self",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "REST API URL of the issue."
+  },
+  {
+    "name": "key",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira issue key, e.g. ITV-1453. NULLABLE so a bad export becomes a DQ finding in 02_dq_stage.sql rather than a load failure."
+  },
+  {
+    "name": "fields",
+    "type": "JSON",
+    "mode": "NULLABLE",
+    "description": "Untyped issue payload carried forward from raw."
+  },
+  {
+    "name": "payload_hash",
+    "type": "INTEGER",
+    "mode": "REQUIRED",
+    "description": "FARM_FINGERPRINT(TO_JSON_STRING(fields)); used to collapse byte-identical duplicate snapshots."
+  },
+  {
+    "name": "dt",
+    "type": "DATE",
+    "mode": "REQUIRED",
+    "description": "Run date the snapshot was loaded for. Partition key."
+  },
+  {
+    "name": "etl_ts",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "UTC time this row was written to stage. Unlike dt, it is not rewritten by a backfill, so it records when the load actually ran."
+  }
+]

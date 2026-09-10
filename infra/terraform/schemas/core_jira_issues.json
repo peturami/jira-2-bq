@@ -1,0 +1,212 @@
+[
+  {
+    "name": "date",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "Run date of the load that last wrote this row."
+  },
+  {
+    "name": "expand",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira REST `expand` header from the issue envelope, listing sections that could be expanded on the request. Operational metadata, carried through unchanged."
+  },
+  {
+    "name": "id",
+    "type": "INTEGER",
+    "mode": "REQUIRED",
+    "description": "Jira issue id. SCD1 merge key; unique across the table."
+  },
+  {
+    "name": "key",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Jira issue key, e.g. ITV-1453."
+  },
+  {
+    "name": "self",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "REST API URL of the issue, e.g. .../rest/api/2/issue/316603. Stable handle back to the source system."
+  },
+  {
+    "name": "project",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Project key derived from `key` by taking the part before the first '-'. The `project_key_matches` DQ rule checks it against fields.project.key."
+  },
+  {
+    "name": "project_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Display name of the Jira project (fields.project.name), e.g. 'IT Vulnerability'."
+  },
+  {
+    "name": "issue_type_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Issue type name (fields.issuetype.name) -- Epic, Story, Task, Sub-task, Bug."
+  },
+  {
+    "name": "resolution_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Resolution name (fields.resolution.name). NULL while the issue is unresolved; Jira sets it only on closure."
+  },
+  {
+    "name": "created_date",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Issue creation time (fields.created) as ISO-8601 with UTC offset, e.g. 2023-04-01T03:20:19.677-0500. STRING because the output contract types only `date` and `id` as non-string."
+  },
+  {
+    "name": "resolved_date",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Time the issue was resolved (fields.resolutiondate), same format as created_date. NULL while unresolved."
+  },
+  {
+    "name": "severity",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11169 (.value). Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "team",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11067 (.value). Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "global_release",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11089 (.value) -- the release train the issue is targeted at. 'Not planned' throughout the reference export."
+  },
+  {
+    "name": "story_points",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira Software story point estimate (customfield_10026). Numeric in Jira, typed STRING here per the output contract."
+  },
+  {
+    "name": "priority",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Priority name (fields.priority.name) -- Highest, High, Medium, Low, Lowest."
+  },
+  {
+    "name": "bug_type",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11191 (.value). Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "summary",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Issue summary -- the one-line title (fields.summary)."
+  },
+  {
+    "name": "testing_scope",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11137, read as a scalar rather than an option object. Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "engineering_area",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11130 (.value). Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "automation_test_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11132, read as a scalar. Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "status",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Current workflow status name (fields.status.name) -- e.g. Backlog, To Do, In Progress, Done. Workflows are configurable per project, so the value set is not fixed across projects."
+  },
+  {
+    "name": "reporter",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Display name of the reporter (fields.reporter.displayName) -- the person the issue is raised on behalf of. See `channel` for the distinction from creator."
+  },
+  {
+    "name": "assignee_name",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Display name of the current assignee (fields.assignee.displayName). NULL when unassigned."
+  },
+  {
+    "name": "total_acv",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_10948, read as a scalar. Name suggests annual contract value; instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "program",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11087 (.value). Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "execution_comments",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11104, read as a scalar. Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "display_in_big_picture",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11079 (.value) -- flags the issue for roadmap/portfolio views. 'Yes' is the only value in the reference export."
+  },
+  {
+    "name": "updated",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira 'updated' timestamp as a string. Drives the MERGE's staleness predicate."
+  },
+  {
+    "name": "engineering_feedback",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11099 (.value). Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "proposed_text_for_limitation_or_resolved_issue",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira custom field customfield_11118, read as a scalar -- release-note text for a limitation or resolved issue. Instance-specific custom field; no non-null values in the reference export, so its value domain is unverified here."
+  },
+  {
+    "name": "customer_request_type",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira Service Management request type (customfield_10002.requestType.name). NULL for issues outside a service project. When Jira cannot resolve the field it returns an error object instead, which the `request_type_no_error_stub` DQ rule counts."
+  },
+  {
+    "name": "project_type",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira project type key (fields.project.projectTypeKey) -- software, service_desk or business."
+  },
+  {
+    "name": "channel",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Display name of the issue's creator (fields.creator.displayName). Named 'channel' by the output contract. Jira distinguishes creator (the account that filed the issue) from reporter (who it is filed on behalf of); they diverge when issues arrive via an integration or customer portal."
+  },
+  {
+    "name": "etl_ts",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "UTC time this row was last inserted or updated by the MERGE. Unlike `date` (the export's arrival date, which a backfill moves backwards), this only ever moves forward."
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "run_date",
+    "type": "DATE",
+    "mode": "REQUIRED",
+    "description": "The dt the run processed. Partition key. A backfill writes an older value, so use etl_ts for wall-clock ordering."
+  },
+  {
+    "name": "dag_run_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Airflow run id, so a retry's rows are distinguishable from the original attempt's."
+  },
+  {
+    "name": "layer",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "raw | stage | core. Qualifies metric_name, which is why names like row_count need no layer prefix."
+  },
+  {
+    "name": "metric_name",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Stable slug, unique within a layer, e.g. dedup_dropped."
+  },
+  {
+    "name": "metric_value",
+    "type": "NUMERIC",
+    "mode": "NULLABLE",
+    "description": "Exact decimal value. NUMERIC rather than FLOAT64 so counts and rates are exact and render as plain decimals -- FLOAT64 shows values above ~1e9 in scientific notation. Timestamp-valued measurements are stored as Unix epoch seconds, so this is the only value column."
+  },
+  {
+    "name": "etl_ts",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "UTC time the measurement was taken. Same meaning as etl_ts on stage and core."
+  }
+]

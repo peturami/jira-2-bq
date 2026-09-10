@@ -1,0 +1,32 @@
+[
+  {
+    "name": "expand",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira 'expand' header, passed through verbatim."
+  },
+  {
+    "name": "id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira issue id as delivered (string); cast to INT64 in core."
+  },
+  {
+    "name": "self",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "REST URL of the issue."
+  },
+  {
+    "name": "key",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Jira issue key, e.g. ITV-1453."
+  },
+  {
+    "name": "fields",
+    "type": "JSON",
+    "mode": "NULLABLE",
+    "description": "Untyped issue payload. Keeping this as JSON is what lets new Jira custom fields land with no schema change."
+  }
+]

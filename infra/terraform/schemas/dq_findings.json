@@ -1,0 +1,62 @@
+[
+  {
+    "name": "run_date",
+    "type": "DATE",
+    "mode": "REQUIRED",
+    "description": "The dt the run processed. Partition key."
+  },
+  {
+    "name": "dag_run_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Airflow run id. Rows are replaced per (run_date, dag_run_id), so a retry overwrites only its own attempt and earlier forensics survive."
+  },
+  {
+    "name": "layer",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "stage | core. Qualifies check_name, which is why names need no layer prefix."
+  },
+  {
+    "name": "check_name",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Stable slug, unique within a layer, e.g. id_is_integer."
+  },
+  {
+    "name": "severity",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "HIGH | MEDIUM | LOW. HIGH fails the run; MEDIUM and LOW are recorded only."
+  },
+  {
+    "name": "rows_affected",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Number of rows violating the rule. Only violations are written to this table, so this is > 0 except for whole-partition rules such as partition_not_empty."
+  },
+  {
+    "name": "observed_value",
+    "type": "FLOAT64",
+    "mode": "NULLABLE",
+    "description": "Measured value for rules where a raw row count is not the point."
+  },
+  {
+    "name": "sample",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "JSON array of up to 5 offending issue keys, so a violation names the rows instead of only counting them."
+  },
+  {
+    "name": "message",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Human-readable description of what the rule enforces."
+  },
+  {
+    "name": "etl_ts",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "UTC time the rule was evaluated. Same meaning as etl_ts on stage and core."
+  }
+]
